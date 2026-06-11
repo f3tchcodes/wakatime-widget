@@ -20,6 +20,14 @@
     "declaration": true,
     "declarationMap": true,
 
+    "baseUrl": "./",
+    "ignoreDeprecations": "6.0",
+    "paths": {
+        "#commands/*": ["src/commands/*.js"],
+        "#services/*": ["src/services/*.js"],
+        "#utils/*": ["src/utils/*.js"]
+    },
+
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
