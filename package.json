@@ -26,6 +26,10 @@
   },
   "homepage": "https://github.com/f3tchcodes/wakatime-widget#readme",
   "dependencies": {
+    "better-sqlite3": "^12.10.0",
     "typescript": "^6.0.3"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13"
   }
 }
