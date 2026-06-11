@@ -31,7 +31,7 @@ client.once(Events.ClientReady, (client: Client) => {
 });
 
 // interaction event
-client.once(Events.InteractionCreate, async (interaction: Interaction) => {
+client.on(Events.InteractionCreate, async (interaction: Interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
     if (interaction.commandName === widgetSetup.data.name) {
