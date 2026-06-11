@@ -14,6 +14,17 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
 
+// initiating rest
+const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN!);
+
+// updating slash commands
+await rest.put(
+    Routes.applicationCommands(process.env.CLIENT_ID!),
+    {
+        body: [widgetSetup.data.toJSON()]
+    }
+)
+
 // client ready event
 client.once(Events.ClientReady, (client: Client) => {
     console.log(`The app is ${client.user?.tag} running successfully!`)
