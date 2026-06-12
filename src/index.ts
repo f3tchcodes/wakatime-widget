@@ -51,4 +51,4 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
 client.login(process.env.BOT_TOKEN);
 
 export const wakatimeBaseUrl = config.wakatimeBaseUrl.endsWith('/') ? config.wakatimeBaseUrl.slice(0, -1) : config.wakatimeBaseUrl;
-export const discordBaseUrl = config.discordBaseUrl.endsWith('/') ? config.wakatimeBaseUrl.slice(0, -1) : config.discordBaseUrl;
+export const discordBaseUrl = config.discordBaseUrl.endsWith('/') ? config.discordBaseUrl.slice(0, -1) : config.discordBaseUrl;
