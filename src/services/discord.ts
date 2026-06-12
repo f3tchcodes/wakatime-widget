@@ -96,19 +96,23 @@ Thank you for using WakaTime Widget!`,
 }
 
 export async function widgetAPIUpdate(wakatimeJSON: object) {
-    const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/1016388460929626174/identities/0/profile`, {
-        method: "PATCH",
-        headers: {
-            "Authorization": `Bot ${process.env.BOT_TOKEN}`,
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(wakatimeJSON)
-    });
+    try {
+        const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/1016388460929626174/identities/0/profile`, {
+            method: "PATCH",
+            headers: {
+                "Authorization": `Bot ${process.env.BOT_TOKEN}`,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(wakatimeJSON)
+        });
 
-    if (!updateAPI.ok) {
-        const err = await updateAPI.text();
-        return console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
+        if (!updateAPI.ok) {
+            const err = await updateAPI.text();
+            return console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
+        }
+
+        console.log("Should be successful, can you check?");
+    } catch (err) {
+        console.log(err);
     }
-
-    console.log("Should be successful, can you check?");
 }
