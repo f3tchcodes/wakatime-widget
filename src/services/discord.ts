@@ -28,10 +28,13 @@ const widgetSetup = new SlashCommandBuilder()
 export default {
     data: widgetSetup,
     async execute(interaction: ChatInputCommandInteraction) {
+        // getting user id, api key and converting the api key into base64
+        // because that's what wakatime expects
         const userID = interaction.user.id;
         const apiKey = interaction.options.getString("api-key", true);
         const apiKeyB64 = Buffer.from(apiKey, "utf-8").toString("base64");
 
+        // sending request to the wakatime api to authenticate the user api key
         const apiCheckReq = await fetch(`${baseUrl}/api/v1/users/current/summaries?start=2026-06-11&end=2026-06-12`, {
             method: "GET",
             headers: {
@@ -40,16 +43,19 @@ export default {
         });
         const apiStatusCode = await apiCheckReq.status;
 
+        // if status code is 401, user is unauthenticated
         if (apiStatusCode === 401) return interaction.reply({
             content: "Invalid API key. User unauthorized!",
             flags: MessageFlags.Ephemeral
         });
 
+        // if status code is not 200, there's some problem with the wakatime api
         if (apiStatusCode !== 200) return interaction.reply({
             content: "Invalid response received by the WakaTime API. Try again later.",
             flags: MessageFlags.Ephemeral
         });
 
+        // if everything checks out we'll put the api key into our database
         const insertQuery = db.prepare(`
             INSERT INTO users
             (user_id, wt_key) VALUES
@@ -58,11 +64,13 @@ export default {
             wt_key = excluded.wt_key;
         `).run(userID, apiKeyB64) as RunResult;
 
+        // if database query did not update anything, we let the user know
         if (insertQuery.changes < 1) return interaction.reply({
             content: "Could not update the database, contact developer for help.\nUsername: f3tch",
             flags: MessageFlags.Ephemeral
         });
 
+        // if everything works, we let the user know the key has been added successfully
         return interaction.reply({
             content: `WakaTime key has been successfully added!`,
             flags: MessageFlags.Ephemeral
