@@ -5,7 +5,7 @@ WakaTime Widget is a Discord widget for displaying your WakaTime coding stats on
 <img width="1303" height="1016" alt="Screenshot 2026-06-12 233952" src="https://github.com/user-attachments/assets/8ebbf2f9-f2f1-4aaa-9ff3-9ff8725b813a" />
 
 ## Usage
-Previously it should have worked by just adding an actively hosted app and running the commands yourself, however recently Discord restricted the users ability to add a widget if they do not own the app that has the widget. Due to this you will have to setup your own app and use the code I provided in order to display the widget on your profile.
+Previously it should have worked by just adding an actively hosted app and running the commands yourself, however recently Discord restricted the users ability to add a widget if they do not own the app that has the widget. Due to this you will have to setup your own app and use the code provided in this repository in order to display the widget on your profile.
 
 Here is the guide on how to setup your own app and widget: [https://chloecinders.com/blog/discord-widgets](https://chloecinders.com/blog/discord-widgets)
 
@@ -15,4 +15,5 @@ You'll have to create the design yourself I believe, if there's any update on th
 You can either directly open an issue from GitHub or contact me on Discord to report a bug.
 Discord: f3tch
 
+Huge thanks to chloe for writing an amazong detailed blog on how to create discord widgets, and other people at Discord Previews server for figuring everything out regarding discord widgets!
 Thank you for using WakaTime widget!
