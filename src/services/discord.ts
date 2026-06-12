@@ -39,7 +39,7 @@ export default {
                 "Authorization": `Basic ${apiKeyB64}`
             }
         });
-        const apiStatusCode = await apiCheckReq.status;
+        const apiStatusCode = apiCheckReq.status;
 
         // if status code is 401, user is unauthenticated
         if (apiStatusCode === 401) return interaction.reply({
