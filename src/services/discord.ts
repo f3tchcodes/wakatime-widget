@@ -1,8 +1,21 @@
-import { InteractionContextType, SlashCommandBuilder, type ChatInputCommandInteraction } from "discord.js";
+import { 
+    InteractionContextType, 
+    SlashCommandBuilder, 
+    MessageFlags,
+    type ChatInputCommandInteraction, 
+} from "discord.js";
+import { db } from "#utils/db";
+import type { RunResult } from "better-sqlite3";
 
-const widgetSetup: SlashCommandBuilder = new SlashCommandBuilder()
+const widgetSetup = new SlashCommandBuilder()
                 .setName("widget-setup")
                 .setDescription("Connect your WakaTime API key and start using the WakaTime widget!")
+                .addStringOption(op => 
+                    op
+                        .setName("api-key")
+                        .setDescription("Enter your WakaTime API key")
+                        .setRequired(true)
+                )
                 .setContexts(
                     InteractionContextType.BotDM,
                     InteractionContextType.PrivateChannel,
@@ -12,6 +25,25 @@ const widgetSetup: SlashCommandBuilder = new SlashCommandBuilder()
 export default {
     data: widgetSetup,
     async execute(interaction: ChatInputCommandInteraction) {
-        interaction.reply("hi")
+        const userID = interaction.user.id;
+        const apiKey = interaction.options.getString("api-key", true);
+
+        const insertQuery = db.prepare(`
+            INSERT INTO users
+            (user_id, wt_key) VALUES
+            (?, ?)
+            ON CONFLICT(user_id) DO UPDATE SET
+            user_id = excluded.user_id;
+        `).run(userID, apiKey) as RunResult;
+
+        if (insertQuery.changes < 1) return interaction.reply({
+            content: "Could not update the database, contact developer for help.\nUsername: f3tch",
+            flags: MessageFlags.Ephemeral
+        });
+
+        return interaction.reply({
+            content: `WakaTime key has been successfully added!`,
+            flags: MessageFlags.Ephemeral
+        });
     }
 }
