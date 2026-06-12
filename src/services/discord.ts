@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
-import { wakatimeBaseUrl } from "../index.js";
+import { wakatimeBaseUrl, discordBaseUrl } from "../index.js";
 
 const widgetSetupData = new SlashCommandBuilder()
                 .setName("widget-setup")
@@ -23,13 +23,17 @@ const widgetSetupData = new SlashCommandBuilder()
                     InteractionContextType.Guild
                 );
 
-const wakatimeJSON = {
-    "total_time": "2 hrs 2 mins",
-    "daily_average": "2 hrs 2 mins",
-    "today_time": "2 hrs 2 mins",
-    "last_week": "2 hrs 2 mins",
-    "most_used_editor": "Visual Studio Code",
-    "most_used_language": "TypeScript"
+const wakatimeJSONPayload = {
+    username: "@f3tch",
+    metadata: {
+        total_time: "2 hrs 2 mins",
+        daily_average: "2 hrs 2 mins",
+        today_time: "2 hrs 2 mins",
+        last_week: "2 hrs 2 mins",
+        most_used_editor: "Visual Studio Code",
+        most_used_language: "TypeScript"
+    }
+    
 }
 
 export const widgetSetup = {
@@ -79,7 +83,26 @@ export const widgetSetup = {
 
         // if everything works, we let the user know the key has been added successfully
         return interaction.reply({
-            content: `WakaTime key has been successfully added!`,
+            content: `WakaTime key has been successfully added!
+            
+Because this is a hidden beta feature, in order to add the widget, you have to run this code in your console:
+\`\`\`
+let _mods=webpackChunkdiscord_app.push([[Symbol()],{},e=>e.c]);webpackChunkdiscord_app.pop();
+let findByProps=(...e)=>{for(let t of Object.values(_mods))try{if(!t.exports||t.exports===window)continue;if(e.every(e=>t.exports?.[e]))return t.exports;for(let r in t.exports)if(e.every(e=>t.exports?.[r]?.[e])&&"IntlMessagesProxy"!==t.exports[r][Symbol.toStringTag])return t.exports[r]}catch{}};
+
+api = findByProps("Bo", "Cu").Bo
+async function addWidget(appId) {
+    id = findByProps("getCurrentUser").getCurrentUser().id;
+    current_widgets = (await api.get("/users/" + id + "/profile")).body.widgets
+    if (current_widgets.map(x=>x.data?.application_id).includes(appId)) {return console.log("Already in your widgets — remove it via Discord client to re-add")}
+    current_widgets.unshift({"data": {"type": "application","application_id": appId}})
+    await api.put({url: "/users/@me/widgets",body:{widgets: current_widgets}})
+}
+// Usage
+addWidget("${process.env.CLIENT_ID}")
+\`\`\`
+
+Thank you for using WakaTime Widget!`,
             flags: MessageFlags.Ephemeral
         });
     }
