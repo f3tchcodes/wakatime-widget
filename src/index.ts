@@ -1,5 +1,6 @@
 import "dotenv/config";
 import "#utils/db";
+import { startWidgetSync } from "#utils/cron";
 import { 
     Client, 
     Events, 
@@ -49,5 +50,11 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
         return console.log(err);
     }
 });
+
+try {
+    await startWidgetSync();
+} catch(err) {
+    console.error(`Error occured while syncing widget stats: ${err}`);
+}
 
 client.login(process.env.BOT_TOKEN)
