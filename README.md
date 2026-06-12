@@ -17,6 +17,6 @@ You can either directly open an issue from GitHub or contact me on Discord to re
 Discord: f3tch
 
 ## Credits and Goodbye
-Huge thanks to chloe for writing an amazong detailed blog on how to create discord widgets, and other people at Discord Previews server for figuring everything out regarding discord widgets!
+Huge thanks to chloe for writing an amazing detailed blog on how to create discord widgets, and other people at Discord Previews server for figuring everything out regarding discord widgets!
 
 Thank you for using WakaTime widget!
