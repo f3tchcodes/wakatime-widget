@@ -27,6 +27,7 @@ export default {
     async execute(interaction: ChatInputCommandInteraction) {
         const userID = interaction.user.id;
         const apiKey = interaction.options.getString("api-key", true);
+        const apiKeyB64 = Buffer.from(apiKey, "utf-8").toString("base64");
 
         const insertQuery = db.prepare(`
             INSERT INTO users
@@ -34,7 +35,7 @@ export default {
             (?, ?)
             ON CONFLICT(user_id) DO UPDATE SET
             wt_key = excluded.wt_key;
-        `).run(userID, apiKey) as RunResult;
+        `).run(userID, apiKeyB64) as RunResult;
 
         if (insertQuery.changes < 1) return interaction.reply({
             content: "Could not update the database, contact developer for help.\nUsername: f3tch",
