@@ -15,5 +15,7 @@ You'll have to create the design yourself I believe, if there's any update on th
 You can either directly open an issue from GitHub or contact me on Discord to report a bug.
 Discord: f3tch
 
+## Credits and Goodbye
 Huge thanks to chloe for writing an amazong detailed blog on how to create discord widgets, and other people at Discord Previews server for figuring everything out regarding discord widgets!
+
 Thank you for using WakaTime widget!
