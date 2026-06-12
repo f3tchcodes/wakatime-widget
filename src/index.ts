@@ -1,5 +1,5 @@
 import "dotenv/config";
-import "#utils/db";
+import { db } from "#utils/db";
 import { 
     Client, 
     Events, 
@@ -11,6 +11,7 @@ import {
 } from "discord.js";
 import { widgetSetup, widgetAPIUpdate } from "#services/discord";
 import config from "#config/config" with { type: "json" };
+import { type Users } from "#interfaces/users";
 
 export const wakatimeBaseUrl = config.wakatimeBaseUrl.endsWith('/') ? config.wakatimeBaseUrl.slice(0, -1) : config.wakatimeBaseUrl;
 export const discordBaseUrl = config.discordBaseUrl.endsWith('/') ? config.discordBaseUrl.slice(0, -1) : config.discordBaseUrl;
@@ -99,7 +100,12 @@ const wakatimeJSONPayload = {
     }
 };
 
+// fetch all users
+const users = db.prepare("SELECT * FROM users").all() as Users[];
+
 // updating stats via API
-await widgetAPIUpdate(wakatimeJSONPayload);
+for (const user of users) {
+    await widgetAPIUpdate(user.user_id, wakatimeJSONPayload);
+}
 
 client.login(process.env.BOT_TOKEN)
