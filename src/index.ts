@@ -99,6 +99,7 @@ const wakatimeJSONPayload = {
     }
 };
 
+// updating stats via API
 await widgetAPIUpdate(wakatimeJSONPayload);
 
 client.login(process.env.BOT_TOKEN)

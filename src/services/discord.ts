@@ -8,6 +8,7 @@ import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
 import { wakatimeBaseUrl, discordBaseUrl } from "../index.js";
 
+// building the slash command for wakatime API key
 const widgetSetupData = new SlashCommandBuilder()
                 .setName("widget-setup")
                 .setDescription("Connect your WakaTime API key and start using the WakaTime widget!")
@@ -23,6 +24,7 @@ const widgetSetupData = new SlashCommandBuilder()
                     InteractionContextType.Guild
                 );
 
+// slash command for entering the wakatime API key
 export const widgetSetup = {
     data: widgetSetupData,
     async execute(interaction: ChatInputCommandInteraction) {
@@ -95,6 +97,7 @@ Thank you for using WakaTime Widget!`,
     }
 }
 
+// updating stats of the widget via API
 export async function widgetAPIUpdate(wakatimeJSON: object) {
     try {
         const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/1016388460929626174/identities/0/profile`, {
@@ -110,8 +113,6 @@ export async function widgetAPIUpdate(wakatimeJSON: object) {
             const err = await updateAPI.text();
             return console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
         }
-
-        console.log("Should be successful, can you check?");
     } catch (err) {
         console.log(err);
     }
