@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { db } from "#utils/db";
+import "#utils/db";
 import { 
     Client, 
     Events, 
@@ -51,15 +51,5 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
         return console.log(err);
     }
 });
-
-
-// fetch all users
-const users = db.prepare("SELECT * FROM users").all() as Users[];
-
-// updating stats via API
-for (const user of users) {
-    const wakatimeJSONPayload = await fetchUserJSONData(user.user_id);
-    await widgetAPIUpdate(user.user_id, wakatimeJSONPayload);
-}
 
 client.login(process.env.BOT_TOKEN)
