@@ -38,6 +38,7 @@
   "imports": {
     "#interfaces/*": "./dist/interfaces/*.js",
     "#services/*": "./dist/services/*.js",
-    "#utils/*": "./dist/utils/*.js"
+    "#utils/*": "./dist/utils/*.js",
+    "#config/*": "./dist/config/*.json"
   }
 }

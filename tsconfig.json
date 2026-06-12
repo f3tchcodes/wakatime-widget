@@ -25,7 +25,8 @@
     "paths": {
         "#interfaces/*": ["src/interfaces/*.js"],
         "#services/*": ["src/services/*.js"],
-        "#utils/*": ["src/utils/*.js"]
+        "#utils/*": ["src/utils/*.js"],
+        "#config/*": ["src/utils/*.json"]
     },
 
     // Stricter Typechecking Options
