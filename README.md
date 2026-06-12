@@ -12,7 +12,8 @@ Here is the guide on how to setup your own app and widget: [https://chloecinders
 You'll have to create the design yourself I believe, if there's any update on this and there's an easier way to add widgets I'll definitely update here.
 
 ## Bugs/Issues
-You can either directly open an issue from GitHub or contact me on Discord to report a bug. Discord: f3tch
+You can either directly open an issue from GitHub or contact me on Discord to report a bug. 
+Discord: f3tch
 
 ## Credits and Goodbye
 Huge thanks to chloe for writing an amazong detailed blog on how to create discord widgets, and other people at Discord Previews server for figuring everything out regarding discord widgets!
