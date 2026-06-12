@@ -10,6 +10,7 @@ import {
     type Interaction
 } from "discord.js";
 import { widgetSetup, widgetAPIUpdate } from "#services/discord";
+import { fetchUserJSONData } from "#services/wakatime";
 import config from "#config/config" with { type: "json" };
 import { type Users } from "#interfaces/users";
 
@@ -21,10 +22,9 @@ const client = new Client({
     intents: [GatewayIntentBits.Guilds]
 });
 
-// initiating rest
+// initiating rest and updating slash commands
 const rest = new REST({version: "10"}).setToken(process.env.BOT_TOKEN!);
 
-// updating slash commands
 await rest.put(
     Routes.applicationCommands(process.env.CLIENT_ID!),
     {
@@ -52,59 +52,13 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
     }
 });
 
-const wakatimeJSONPayload = {
-    username: "@f3tch", 
-    data: {
-        dynamic: [
-            {
-                type: 1,
-                name: "wakatime_handle",
-                value: "@f3tch"
-            },
-            {
-                type: 1,
-                name: "hireable",
-                value: "hireable"
-            },
-            {
-                type: 1,
-                name: "total_time",
-                value: "2 hrs 2 mins"
-            },
-            {
-                type: 1,
-                name: "daily_average",
-                value: "2 hrs 2 mins"
-            },
-            {
-                type: 1,
-                name: "today_time",
-                value: "2 hrs 2 mins"
-            },
-            {
-                type: 1,
-                name: "last_week_time",
-                value: "2 hrs 2 mins"
-            },
-            {
-                type: 1,
-                name: "most_used_editor",
-                value: "Visual Studio Code"
-            },
-            {
-                type: 1,
-                name: "most_used_language",
-                value: "TypeScript"
-            }
-        ]
-    }
-};
 
 // fetch all users
 const users = db.prepare("SELECT * FROM users").all() as Users[];
 
 // updating stats via API
 for (const user of users) {
+    const wakatimeJSONPayload = await fetchUserJSONData(user.user_id);
     await widgetAPIUpdate(user.user_id, wakatimeJSONPayload);
 }
 
