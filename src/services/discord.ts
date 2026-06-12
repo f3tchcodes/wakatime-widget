@@ -23,19 +23,6 @@ const widgetSetupData = new SlashCommandBuilder()
                     InteractionContextType.Guild
                 );
 
-const wakatimeJSONPayload = {
-    username: "@f3tch",
-    metadata: {
-        total_time: "2 hrs 2 mins",
-        daily_average: "2 hrs 2 mins",
-        today_time: "2 hrs 2 mins",
-        last_week: "2 hrs 2 mins",
-        most_used_editor: "Visual Studio Code",
-        most_used_language: "TypeScript"
-    }
-    
-}
-
 export const widgetSetup = {
     data: widgetSetupData,
     async execute(interaction: ChatInputCommandInteraction) {
@@ -106,4 +93,22 @@ Thank you for using WakaTime Widget!`,
             flags: MessageFlags.Ephemeral
         });
     }
+}
+
+export async function widgetAPIUpdate(wakatimeJSON: object) {
+    const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/1016388460929626174/identities/0/profile`, {
+        method: "PATCH",
+        headers: {
+            "Authorization": `Bot ${process.env.BOT_TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(wakatimeJSON)
+    });
+
+    if (!updateAPI.ok) {
+        const err = await updateAPI.text();
+        return console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
+    }
+
+    console.log("Should be successful, can you check?");
 }

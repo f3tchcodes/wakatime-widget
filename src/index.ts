@@ -9,8 +9,11 @@ import {
     Routes,
     type Interaction
 } from "discord.js";
-import { widgetSetup } from "#services/discord";
+import { widgetSetup, widgetAPIUpdate } from "#services/discord";
 import config from "#config/config" with { type: "json" };
+
+export const wakatimeBaseUrl = config.wakatimeBaseUrl.endsWith('/') ? config.wakatimeBaseUrl.slice(0, -1) : config.wakatimeBaseUrl;
+export const discordBaseUrl = config.discordBaseUrl.endsWith('/') ? config.discordBaseUrl.slice(0, -1) : config.discordBaseUrl;
 
 // connecting to the client with default intents
 const client = new Client({
@@ -48,7 +51,54 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
     }
 });
 
-client.login(process.env.BOT_TOKEN);
+const wakatimeJSONPayload = {
+    username: "@f3tch", 
+    data: {
+        dynamic: [
+            {
+                type: 1,
+                name: "wakatime_handle",
+                value: "@f3tch"
+            },
+            {
+                type: 1,
+                name: "hireable",
+                value: "hireable"
+            },
+            {
+                type: 1,
+                name: "total_time",
+                value: "2 hrs 2 mins"
+            },
+            {
+                type: 1,
+                name: "daily_average",
+                value: "2 hrs 2 mins"
+            },
+            {
+                type: 1,
+                name: "today_time",
+                value: "2 hrs 2 mins"
+            },
+            {
+                type: 1,
+                name: "last_week_time",
+                value: "2 hrs 2 mins"
+            },
+            {
+                type: 1,
+                name: "most_used_editor",
+                value: "Visual Studio Code"
+            },
+            {
+                type: 1,
+                name: "most_used_language",
+                value: "TypeScript"
+            }
+        ]
+    }
+};
 
-export const wakatimeBaseUrl = config.wakatimeBaseUrl.endsWith('/') ? config.wakatimeBaseUrl.slice(0, -1) : config.wakatimeBaseUrl;
-export const discordBaseUrl = config.discordBaseUrl.endsWith('/') ? config.discordBaseUrl.slice(0, -1) : config.discordBaseUrl;
+await widgetAPIUpdate(wakatimeJSONPayload);
+
+client.login(process.env.BOT_TOKEN)
