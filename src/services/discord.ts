@@ -33,7 +33,7 @@ export default {
             (user_id, wt_key) VALUES
             (?, ?)
             ON CONFLICT(user_id) DO UPDATE SET
-            user_id = excluded.user_id;
+            wt_key = excluded.wt_key;
         `).run(userID, apiKey) as RunResult;
 
         if (insertQuery.changes < 1) return interaction.reply({
