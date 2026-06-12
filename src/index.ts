@@ -3,6 +3,7 @@ import {
     Client, 
     Events, 
     GatewayIntentBits,
+    MessageFlags,
     REST,
     Routes,
     type Interaction
@@ -34,8 +35,14 @@ client.once(Events.ClientReady, (client: Client) => {
 client.on(Events.InteractionCreate, async (interaction: Interaction) => {
     if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === widgetSetup.data.name) {
-        await widgetSetup.execute(interaction);
+    try {
+        if (interaction.commandName === widgetSetup.data.name) await widgetSetup.execute(interaction);
+    } catch (err) {
+        interaction.reply({
+            content: "Error occured running your command, contact developer for help.\nUsername: f3tch",
+            flags: MessageFlags.Ephemeral
+        })
+        return console.log(err);
     }
 });
 
