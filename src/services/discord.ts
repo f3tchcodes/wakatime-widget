@@ -6,7 +6,7 @@ import {
 } from "discord.js";
 import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
-import { baseUrl } from "../index.js";
+import { wakatimeBaseUrl } from "../index.js";
 
 const widgetSetupData = new SlashCommandBuilder()
                 .setName("widget-setup")
@@ -23,6 +23,15 @@ const widgetSetupData = new SlashCommandBuilder()
                     InteractionContextType.Guild
                 );
 
+const wakatimeJSON = {
+    "total_time": "2 hrs 2 mins",
+    "daily_average": "2 hrs 2 mins",
+    "today_time": "2 hrs 2 mins",
+    "last_week": "2 hrs 2 mins",
+    "most_used_editor": "Visual Studio Code",
+    "most_used_language": "TypeScript"
+}
+
 export const widgetSetup = {
     data: widgetSetupData,
     async execute(interaction: ChatInputCommandInteraction) {
@@ -33,7 +42,7 @@ export const widgetSetup = {
         const apiKeyB64 = Buffer.from(apiKey, "utf-8").toString("base64");
 
         // sending request to the wakatime api to authenticate the user api key
-        const apiCheckReq = await fetch(`${baseUrl}/api/v1/users/current/summaries?start=2026-06-11&end=2026-06-12`, {
+        const apiCheckReq = await fetch(`${wakatimeBaseUrl}/api/v1/users/current/summaries?start=2026-06-11&end=2026-06-12`, {
             method: "GET",
             headers: {
                 "Authorization": `Basic ${apiKeyB64}`

@@ -1,3 +1,4 @@
 {
-    "baseUrl": "https://wakatime.com/"
+    "wakatimeBaseUrl": "https://wakatime.com/",
+    "discordBaseUrl": "https://discord.com/"
 }
