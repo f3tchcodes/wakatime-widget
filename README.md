@@ -13,6 +13,7 @@ You'll have to create the design yourself I believe, if there's any update on th
 
 ## Bugs/Issues
 You can either directly open an issue from GitHub or contact me on Discord to report a bug.
+
 Discord: f3tch
 
 ## Credits and Goodbye
