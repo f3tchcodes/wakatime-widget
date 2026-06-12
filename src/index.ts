@@ -9,7 +9,7 @@ import {
     Routes,
     type Interaction
 } from "discord.js";
-import widgetSetup from "#services/discord";
+import { widgetSetup } from "#services/discord";
 import config from "#config/config" with { type: "json" };
 
 // connecting to the client with default intents

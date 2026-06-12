@@ -8,7 +8,7 @@ import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
 import { baseUrl } from "../index.js";
 
-const widgetSetup = new SlashCommandBuilder()
+const widgetSetupData = new SlashCommandBuilder()
                 .setName("widget-setup")
                 .setDescription("Connect your WakaTime API key and start using the WakaTime widget!")
                 .addStringOption(op => 
@@ -23,8 +23,8 @@ const widgetSetup = new SlashCommandBuilder()
                     InteractionContextType.Guild
                 );
 
-export default {
-    data: widgetSetup,
+export const widgetSetup = {
+    data: widgetSetupData,
     async execute(interaction: ChatInputCommandInteraction) {
         // getting user id, api key and converting the api key into base64
         // because that's what wakatime expects
