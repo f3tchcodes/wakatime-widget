@@ -7,6 +7,7 @@ import {
 import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
 import { wakatimeBaseUrl, discordBaseUrl } from "../index.js";
+import { type Users } from "#interfaces/users";
 
 // building the slash command for wakatime API key
 const widgetSetupData = new SlashCommandBuilder()
@@ -100,18 +101,23 @@ Thank you for using WakaTime Widget!`,
 // updating stats of the widget via API
 export async function widgetAPIUpdate(wakatimeJSON: object) {
     try {
-        const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/1016388460929626174/identities/0/profile`, {
-            method: "PATCH",
-            headers: {
-                "Authorization": `Bot ${process.env.BOT_TOKEN}`,
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(wakatimeJSON)
-        });
 
-        if (!updateAPI.ok) {
-            const err = await updateAPI.text();
-            return console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
+        const users = db.prepare("SELECT user_id FROM users").all() as Users[];
+        
+        for (const user of users) {
+            const updateAPI = await fetch(`${discordBaseUrl}/api/v9/applications/${process.env.CLIENT_ID}/users/${user.user_id}/identities/0/profile`, {
+                method: "PATCH",
+                headers: {
+                    "Authorization": `Bot ${process.env.BOT_TOKEN}`,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(wakatimeJSON)
+            });
+
+            if (!updateAPI.ok) {
+                const err = await updateAPI.text();
+                console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
+            }
         }
     } catch (err) {
         console.log(err);
