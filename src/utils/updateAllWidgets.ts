@@ -10,7 +10,11 @@ export async function updateAllWidgets() {
 
     // updating stats via API
     for (const user of users) {
-        const wakatimeJSONPayload = await fetchUserJSONData(user.user_id);
-        await widgetAPIUpdate(user.user_id, wakatimeJSONPayload);
+        try {
+            const wakatimeJSONPayload = await fetchUserJSONData(user.user_id);
+            await widgetAPIUpdate(user.user_id, wakatimeJSONPayload);
+        } catch (err) {
+            console.error(`Not updated: ${user.user_id}\nError: ${err}`);
+        }
     }
 }
