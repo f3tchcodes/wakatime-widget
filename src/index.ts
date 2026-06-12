@@ -10,6 +10,7 @@ import {
     type Interaction
 } from "discord.js";
 import widgetSetup from "#services/discord";
+import config from "#config/config" with { type: "json" };
 
 // connecting to the client with default intents
 const client = new Client({
@@ -48,3 +49,4 @@ client.on(Events.InteractionCreate, async (interaction: Interaction) => {
 });
 
 client.login(process.env.BOT_TOKEN);
+export const baseUrl = config.baseUrl.endsWith('/') ? config.baseUrl.slice(0, -1) : config.baseUrl;

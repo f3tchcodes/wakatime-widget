@@ -6,9 +6,7 @@ import {
 } from "discord.js";
 import { db } from "#utils/db";
 import type { RunResult } from "better-sqlite3";
-import config from "#config/config" with { type: "json" };
-
-const baseUrl = config.baseUrl.endsWith('/') ? config.baseUrl.slice(0, -1) : config.baseUrl;
+import { baseUrl } from "../index.js";
 
 const widgetSetup = new SlashCommandBuilder()
                 .setName("widget-setup")
