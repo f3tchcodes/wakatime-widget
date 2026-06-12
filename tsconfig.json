@@ -26,7 +26,7 @@
         "#interfaces/*": ["src/interfaces/*.js"],
         "#services/*": ["src/services/*.js"],
         "#utils/*": ["src/utils/*.js"],
-        "#config/*": ["src/utils/*.json"]
+        "#config/*": ["src/config/*.json"]
     },
 
     // Stricter Typechecking Options
