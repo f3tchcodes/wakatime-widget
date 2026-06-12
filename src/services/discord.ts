@@ -101,7 +101,6 @@ Thank you for using WakaTime Widget!`,
 // updating stats of the widget via API
 export async function widgetAPIUpdate(wakatimeJSON: object) {
     try {
-
         const users = db.prepare("SELECT user_id FROM users").all() as Users[];
         
         for (const user of users) {
@@ -119,6 +118,8 @@ export async function widgetAPIUpdate(wakatimeJSON: object) {
                 console.error(`Failed status: ${updateAPI.status}\nFailed message: ${err}`);
             }
         }
+
+        return;
     } catch (err) {
         console.log(err);
     }
