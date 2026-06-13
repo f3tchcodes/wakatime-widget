@@ -5,8 +5,9 @@ import type { Users } from "#interfaces/users";
 import type { TodayAPI } from "#interfaces/API/today";
 import type { Last7Days } from "#interfaces/API/last7days";
 import type { AllTime } from "#interfaces/API/allTime";
+import type { WakatimeJSONResponseAPI } from "#interfaces/API/wakatimeJSONResponse";
 
-export async function fetchUserJSONData(userID: string): Promise<object> {
+export async function fetchUserJSONData(userID: string): Promise<WakatimeJSONResponseAPI> {
     const userObj = db.prepare("SELECT * FROM users WHERE user_id = ?").get(userID) as Users;
     const apiKeyB64 = userObj.wt_key;
 
